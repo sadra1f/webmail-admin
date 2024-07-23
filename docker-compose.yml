@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  mailserver:
+    image: mailserver/docker-mailserver:latest
+    hostname: "127.0.0.1"
+    container_name: mailserver
+    env_file: ./docker/mailserver/mailserver.env
+    volumes:
+      - ./docker/mailserver/maildata:/var/mail # Mail data
+      - ./docker/mailserver/config/:/tmp/docker-mailserver # Mailserver configuration
+    ports:
+      - "25:25"
+      - "143:143"
+      - "587:587"
+      - "993:993" # You can change external port to avoid conflict
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  roundcube:
+    image: roundcube/roundcubemail:latest
+    container_name: roundcube
+    environment:
+      ROUNDCUBEMAIL_DEFAULT_HOST: "mailserver"
+      ROUNDCUBEMAIL_SMTP_SERVER: "mailserver"
+      ROUNDCUBEMAIL_SMTP_PORT: 587
+      ROUNDCUBEMAIL_DEFAULT_PORT: 143
+      ROUNDCUBEMAIL_REQUEST_PATH: "/roundcube/"
+    volumes:
+      - ./docker/roundcube/data:/var/roundcube/data # Data
+      - ./docker/roundcube/logs:/var/roundcube/logs # Logs
+      - ./docker/roundcube/config:/var/roundcube/config # Config
+      - ./docker/roundcube/RoundcubeAutoLogin.php:/var/www/html/RoundcubeAutoLogin.php
+    restart: unless-stopped
+
+  admin_panel:
+    container_name: webmail-admin
+    build:
+      context: .
+    environment:
+      SECRET_KEY: "django-insecure-9)(dn6z*nd0_i#njt=z%i9d=*mn65&9+hl5*yfc6on0+ast-e4"
+      DEBUG: "false"
+      ALLOWED_HOSTS: "your-domain.com,www.your-domain.com"
+      ROUNDCUBE_URL: "/roundcube/RoundcubeAutoLogin.php"
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+volumes:
+  maildata:
+  roundcube_data:
+  roundcube_logs:
+  roundcube_config:

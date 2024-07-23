@@ -1,0 +1,28 @@
+input.admin-action-submit,
+input.admin-action-submit:hover,
+button.admin-action-submit,
+button.admin-action-submit:hover {
+  color: var(--link-fg);
+  text-decoration: none;
+  transition: color 0.15s;
+  background: none;
+  padding: 0;
+  border: 0;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+input.admin-action-submit:hover,
+button.admin-action-submit:hover {
+  color: var(--link-hover-color);
+}
+
+input.admin-action-submit svg,
+input.admin-action-submit:hover svg,
+button.admin-action-submit svg,
+button.admin-action-submit:hover svg {
+  display: inline-block;
+  width: 0.8125rem;
+  height: 0.8125rem;
+  transform: translateY(1px);
+}

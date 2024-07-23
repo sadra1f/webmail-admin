@@ -1,0 +1,36 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==5.0.*"
+django-revproxy = "==0.12.*"
+# mysqlclient = "==2.2.*"
+whitenoise = "==6.7.*"
+
+[dev-packages]
+black = "*"
+django-debug-toolbar = "==4.4.*"
+isort = "*"
+
+[requires]
+python_version = "3.11"
+
+[scripts]
+dev = "python manage.py runserver"
+serve = "python manage.py runserver"
+startapp = "python manage.py startapp"
+makemigrations = "python manage.py makemigrations"
+migrate = "python manage.py migrate"
+createcachetable = "python manage.py createcachetable"
+shell = "python manage.py shell"
+createsuperuser = "python manage.py createsuperuser"
+changepassword = "python manage.py changepassword"
+collectstatic = "python manage.py collectstatic --noinput"
+addemail = "python manage.py addemail"
+black = "python -m black ."
+isort = "python -m isort ."
+
+[pipenv]
+allow_prereleases = true
