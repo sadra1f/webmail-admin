@@ -44,7 +44,7 @@ class EmailAccountAdmin(admin.ModelAdmin):
                     </svg>
                 </button>
             """,
-            settings.ROUNDCUBE_URL,
+            settings.ROUNDCUBE_LOGIN_URL,
             obj.user,
             obj.password,
         )

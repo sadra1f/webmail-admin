@@ -98,7 +98,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASE_NAME = os.environ.get("DB_NAME", "kman_admin_panel")
+# DATABASE_NAME = os.environ.get("DB_NAME", "webmail_admin")
 # DATABASE_UNAME = os.environ.get("DB_UNAME", "root")
 # DATABASE_PASSWORD = os.environ.get("DB_PASS", "")
 # DATABASE_HOST = os.environ.get("DB_HOST", "127.0.0.1")
@@ -213,6 +213,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# App configurations
+# Roundcube configurations
 
-ROUNDCUBE_URL = os.environ.get("ROUNDCUBE_URL", "/roundcube/?_autologin=1")
+ROUNDCUBE_ENABLE = os.environ.get("ROUNDCUBE_ENABLE", "False").lower() in ("true", "1")
+ROUNDCUBE_LOGIN_URL = os.environ.get("ROUNDCUBE_LOGIN_URL", "/roundcube/?_autologin=1")
+
+# Mailserver configurations
+POSTFIX_SSH_ROOT_PASSWORD = os.environ.get("POSTFIX_SSH_ROOT_PASSWORD")

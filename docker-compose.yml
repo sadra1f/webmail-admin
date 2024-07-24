@@ -2,10 +2,18 @@ version: "3.8"
 
 services:
   mailserver:
-    image: mailserver/docker-mailserver:latest
+    build:
+      context: ./docker/mailserver
     hostname: "127.0.0.1"
     container_name: mailserver
-    env_file: ./docker/mailserver/mailserver.env
+    environment:
+      ENABLE_SPAMASSASSIN: ${MAILSERVER_ENABLE_SPAMASSASSIN:-1}
+      ENABLE_CLAMAV: ${MAILSERVER_ENABLE_CLAMAV:-1}
+      ENABLE_FAIL2BAN: ${MAILSERVER_ENABLE_FAIL2BAN:-1}
+      ENABLE_POSTGREY: ${MAILSERVER_ENABLE_POSTGREY:-0}
+      ONE_DIR: ${MAILSERVER_ONE_DIR:-1}
+      DMS_DEBUG: ${MAILSERVER_DMS_DEBUG:-0}
+      SSH_ROOT_PASSWORD: ${POSTFIX_SSH_ROOT_PASSWORD:-root}
     volumes:
       - ./docker/mailserver/maildata:/var/mail # Mail data
       - ./docker/mailserver/config/:/tmp/docker-mailserver # Mailserver configuration
@@ -25,14 +33,14 @@ services:
         max-file: "3"
 
   roundcube:
-    image: roundcube/roundcubemail:latest
+    image: roundcube/roundcubemail:1.6.x-apache
     container_name: roundcube
     environment:
-      ROUNDCUBEMAIL_DEFAULT_HOST: "mailserver"
-      ROUNDCUBEMAIL_SMTP_SERVER: "mailserver"
-      ROUNDCUBEMAIL_SMTP_PORT: 587
-      ROUNDCUBEMAIL_DEFAULT_PORT: 143
-      ROUNDCUBEMAIL_REQUEST_PATH: "/roundcube/"
+      ROUNDCUBEMAIL_DEFAULT_HOST: ${ROUNDCUBEMAIL_DEFAULT_HOST:-mailserver}
+      ROUNDCUBEMAIL_SMTP_SERVER: ${ROUNDCUBEMAIL_SMTP_SERVER:-mailserver}
+      ROUNDCUBEMAIL_SMTP_PORT: ${ROUNDCUBEMAIL_SMTP_PORT:-587}
+      ROUNDCUBEMAIL_DEFAULT_PORT: ${ROUNDCUBEMAIL_DEFAULT_PORT:-143}
+      ROUNDCUBEMAIL_REQUEST_PATH: ${ROUNDCUBEMAIL_REQUEST_PATH:-/roundcube/}
     volumes:
       - ./docker/roundcube/data:/var/roundcube/data # Data
       - ./docker/roundcube/logs:/var/roundcube/logs # Logs
@@ -45,10 +53,12 @@ services:
     build:
       context: .
     environment:
-      SECRET_KEY: "django-insecure-9)(dn6z*nd0_i#njt=z%i9d=*mn65&9+hl5*yfc6on0+ast-e4"
-      DEBUG: "false"
-      ALLOWED_HOSTS: "your-domain.com,www.your-domain.com"
-      ROUNDCUBE_URL: "/roundcube/RoundcubeAutoLogin.php"
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      ROUNDCUBE_ENABLE: ${ROUNDCUBE_ENABLE}
+      ROUNDCUBE_LOGIN_URL: ${ROUNDCUBE_LOGIN_URL:-"/roundcube/RoundcubeAutoLogin.php"}
+      POSTFIX_SSH_ROOT_PASSWORD: ${POSTFIX_SSH_ROOT_PASSWORD:-root}
     ports:
       - "8000:8000"
     restart: unless-stopped
