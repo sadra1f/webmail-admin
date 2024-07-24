@@ -152,3 +152,6 @@ lerna-debug.log*
 
 # Visual Studio Code
 *.code-workspace
+
+# Project related
+./docker
