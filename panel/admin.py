@@ -8,7 +8,9 @@ from panel.models import EmailAccount
 @admin.register(EmailAccount)
 class EmailAccountAdmin(admin.ModelAdmin):
     search_fields = ["user"]
-    list_display = ["user", "view_in_roundcube"]
+    list_display = [
+        "user",
+    ] + (["view_in_roundcube"] if settings.ROUNDCUBE_ENABLE else [])
 
     @admin.display(description="Roundcube")
     def view_in_roundcube(self, obj):

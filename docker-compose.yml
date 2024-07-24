@@ -57,6 +57,7 @@ services:
       DEBUG: ${DEBUG}
       ALLOWED_HOSTS: ${ALLOWED_HOSTS}
       ROUNDCUBE_ENABLE: ${ROUNDCUBE_ENABLE}
+      ROUNDCUBE_URL: ${ROUNDCUBE_URL:-"http://roundcube"}
       ROUNDCUBE_LOGIN_URL: ${ROUNDCUBE_LOGIN_URL:-"/roundcube/RoundcubeAutoLogin.php"}
       POSTFIX_SSH_ROOT_PASSWORD: ${POSTFIX_SSH_ROOT_PASSWORD:-root}
     ports:

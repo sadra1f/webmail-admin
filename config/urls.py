@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.views.generic import RedirectView
 
 from panel import views as panel_views
 
@@ -30,14 +31,19 @@ admin.site.site_url = ""
 urlpatterns = (
     [
         path("admin/", admin.site.urls),
-        path(
-            "roundcube/",
-            include([re_path(r"(?P<path>.*)", panel_views.RoundcubeProxy.as_view())]),
-        ),
+        path("", RedirectView.as_view(url="admin/", permanent=False)),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 )
+
+if settings.ROUNDCUBE_ENABLE:
+    urlpatterns = [
+        path(
+            "roundcube/",
+            include([re_path(r"(?P<path>.*)", panel_views.RoundcubeProxy.as_view())]),
+        )
+    ] + urlpatterns
 
 if "debug_toolbar" in settings.INSTALLED_APPS:
     urlpatterns = [path("__debug__/", include("debug_toolbar.urls"))] + urlpatterns
