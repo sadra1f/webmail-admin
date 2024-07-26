@@ -1,4 +1,3 @@
-# TODO: Update to use Gunicorn
 FROM python:3.11-alpine3.20
 
 WORKDIR /app
