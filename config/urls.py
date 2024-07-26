@@ -44,6 +44,3 @@ if settings.ROUNDCUBE_ENABLE:
             include([re_path(r"(?P<path>.*)", panel_views.RoundcubeProxy.as_view())]),
         )
     ] + urlpatterns
-
-if "debug_toolbar" in settings.INSTALLED_APPS:
-    urlpatterns = [path("__debug__/", include("debug_toolbar.urls"))] + urlpatterns

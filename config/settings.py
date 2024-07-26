@@ -43,19 +43,16 @@ INTERNAL_IPS = [
 
 # Application definition
 
-INSTALLED_APPS = (
-    [
-        "django.contrib.admin",
-        "django.contrib.auth",
-        "revproxy",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
-        "django.contrib.messages",
-        "django.contrib.staticfiles",
-    ]
-    + (["debug_toolbar"] if DEBUG else [])
-    + ["panel"]
-)
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "revproxy",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "panel",
+]
 
 
 MIDDLEWARE = [
@@ -67,7 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-] + (["debug_toolbar.middleware.DebugToolbarMiddleware"] if DEBUG else [])
+]
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
