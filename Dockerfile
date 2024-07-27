@@ -2,8 +2,8 @@ FROM python:3.11-alpine3.20
 
 WORKDIR /app
 
-RUN apk add --no-cache openssh
-RUN pip install pipenv --user
+RUN apk add --no-cache gcc openssh
+RUN pip install pipenv --user --no-cache-dir
 
 COPY Pipfile* pyproject.toml /app/
 RUN python -m pipenv install \

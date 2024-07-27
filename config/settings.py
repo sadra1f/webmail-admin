@@ -223,4 +223,10 @@ ROUNDCUBE_URL = os.environ.get("ROUNDCUBE_URL")
 ROUNDCUBE_LOGIN_URL = os.environ.get("ROUNDCUBE_LOGIN_URL", "/roundcube/?_autologin=1")
 
 # Mailserver configurations
-POSTFIX_SSH_ROOT_PASSWORD = os.environ.get("POSTFIX_SSH_ROOT_PASSWORD")
+POSTFIX_SSH_HOST = os.environ.get("POSTFIX_SSH_HOST", "127.0.0.1")
+POSTFIX_SSH_PORT = os.environ.get("POSTFIX_SSH_PORT", "22")
+POSTFIX_SSH_USER = os.environ.get("POSTFIX_SSH_USER", "root")
+POSTFIX_SSH_PASSWORD = os.environ.get(
+    "POSTFIX_SSH_PASSWORD",
+    os.environ.get("POSTFIX_SSH_ROOT_PASSWORD", "root"),
+)
