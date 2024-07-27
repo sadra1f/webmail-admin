@@ -12,6 +12,12 @@ class EmailAccountAdmin(admin.ModelAdmin):
         "user",
     ] + (["view_in_roundcube"] if settings.ROUNDCUBE_ENABLE else [])
 
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
     @admin.display(description="Roundcube")
     def view_in_roundcube(self, obj):
         return format_html(
