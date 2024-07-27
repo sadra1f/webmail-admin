@@ -62,6 +62,8 @@ services:
       ROUNDCUBE_URL: ${ROUNDCUBE_URL:-"http://roundcube"}
       ROUNDCUBE_LOGIN_URL: ${ROUNDCUBE_LOGIN_URL:-"/roundcube/RoundcubeAutoLogin.php"}
       POSTFIX_SSH_ROOT_PASSWORD: ${POSTFIX_SSH_ROOT_PASSWORD:-root}
+    volumes:
+      - ./docker/data:/app/data
     ports:
       - "8000:8000"
     restart: unless-stopped

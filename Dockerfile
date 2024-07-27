@@ -11,12 +11,13 @@ RUN python -m pipenv install \
     && pip install -r requirements.txt --no-cache-dir
 
 COPY . /app
-RUN mkdir -p static \
-    && mkdir -p media
+RUN mkdir -p data \
+    && mkdir -p media \
+    && mkdir -p static
 RUN python -m pipenv run migrate \
     && python -m pipenv run collectstatic
 
 EXPOSE 8000
 
-ENTRYPOINT ["python", "-m", "gunicorn", "config.wsgi"] 
-CMD ["--bind", "0.0.0.0:8000", "--chdir=/app"]
+ENTRYPOINT ["python", "-m", "gunicorn"] 
+CMD ["config.wsgi", "--bind", "0.0.0.0:8000", "--chdir=/app"]
