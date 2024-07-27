@@ -16,6 +16,9 @@ class EmailAccount(models.Model):
     class Meta:
         ordering = ["-created_on"]
 
+    def __str__(self) -> str:
+        return self.user
+
     def delete(self, *args, **kwargs):
         logger = logging.getLogger(__name__)
 
