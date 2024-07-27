@@ -219,7 +219,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Roundcube configurations
 
 ROUNDCUBE_ENABLE = os.environ.get("ROUNDCUBE_ENABLE", "False").lower() in ("true", "1")
-ROUNDCUBE_URL = os.environ.get("ROUNDCUBE_LOGIN_URL")
+ROUNDCUBE_URL = os.environ.get("ROUNDCUBE_URL")
 ROUNDCUBE_LOGIN_URL = os.environ.get("ROUNDCUBE_LOGIN_URL", "/roundcube/?_autologin=1")
 
 # Mailserver configurations
