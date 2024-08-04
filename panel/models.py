@@ -55,6 +55,8 @@ class EmailAccount(models.Model):
             # TODO: Throw exception
             logger.error(traceback.format_exc())
 
+        ssh.close()
+
     def save(self, *args, **kwargs):
         logger = logging.getLogger(__name__)
 
@@ -112,3 +114,5 @@ class EmailAccount(models.Model):
         except:
             # TODO: Throw exception
             logger.error(traceback.format_exc())
+
+        ssh.close()
